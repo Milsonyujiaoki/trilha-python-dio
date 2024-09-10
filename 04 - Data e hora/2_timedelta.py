@@ -18,7 +18,6 @@ else:
 
 
 print(date.today() - timedelta(days=1))
-
 resultado = datetime(2023, 7, 25, 10, 19, 20) - timedelta(hours=1)
 print(resultado.time())
 
