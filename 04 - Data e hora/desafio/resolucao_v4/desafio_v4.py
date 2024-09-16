@@ -144,8 +144,6 @@ class Conta:
             return False
 
         self._saldo -= valor
-        self._historico.adicionar_transacao('Saque', valor)
-        print("\n=== Saque realizado com sucesso! ===")
         return True
 
     def depositar(self: object, valor: float) -> bool:
@@ -157,8 +155,6 @@ class Conta:
             return False
 
         self._saldo += valor
-        self._historico.adicionar_transacao('Depósito', valor)
-        print("\n=== Depósito realizado com sucesso! ===")
         return True
 
 
@@ -216,7 +212,10 @@ class Historico:
         return self._transacoes
 
     def adicionar_transacao(self: object, tipo: str, valor: float) -> None:
-        """Adiciona uma transação ao histórico."""
+        """Adiciona uma transação ao histórico, garantindo que não seja duplicada."""
+        if self._transacoes and self._transacoes[-1]["tipo"] == tipo and self._transacoes[-1]["valor"] == valor:
+            print("Transação duplicada detectada, não adicionada.")
+            return
         self._transacoes.append(
             {
                 "tipo": tipo,
@@ -521,7 +520,7 @@ def transferir(clientes: List[PessoaFisica]) -> None:
     else:
         print("\n@@@ Falha na transferência! @@@")
 
-  
+
 def main() -> None:
     """
     Função principal que controla o fluxo do sistema bancário.
