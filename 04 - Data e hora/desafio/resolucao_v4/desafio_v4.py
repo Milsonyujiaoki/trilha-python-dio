@@ -322,9 +322,10 @@ def menu() -> str:
     [d]\tDepositar
     [s]\tSacar
     [e]\tExtrato
-    [nc]\tNova conta
-    [lc]\tListar contas
-    [nu]\tNovo usuário
+    [nc]\tNovo Cliente
+    [lc]\tListar Clientes
+    [ncc]\tNova Conta
+    [lcc]\tListar Contas
     [t]\tTransferir
     [q]\tSair
     => """
@@ -431,7 +432,7 @@ def exibir_extrato(clientes: List[PessoaFisica]) -> None:
 
 
 @log_transacao
-def criar_cliente(clientes: List[PessoaFisica]) -> None:
+def novo_cliente(clientes: List[PessoaFisica]) -> None:
     """
     Cria um novo cliente com os dados fornecidos.
     """
@@ -450,6 +451,20 @@ def criar_cliente(clientes: List[PessoaFisica]) -> None:
     clientes.append(cliente)
 
     print("\n=== Cliente criado com sucesso! ===")
+
+
+def listar_clientes(clientes: List[PessoaFisica]) -> None:
+    """
+    Exibe a lista de clientes cadastrados.
+    """
+    if not clientes:
+        print("\nNenhum cliente cadastrado.")
+        return
+
+    print("\n=== Lista de Clientes ===")
+    for cliente in clientes:
+        print(f"Nome: {cliente.nome}, CPF: {cliente.cpf}, Endereço: {cliente.endereco}")
+    print("\n=== Total de clientes: {} ===".format(len(clientes)))
 
 
 @log_transacao
@@ -540,14 +555,17 @@ def main() -> None:
         elif opcao == "e":
             exibir_extrato(clientes)
 
-        elif opcao == "nu":
-            criar_cliente(clientes)
-
         elif opcao == "nc":
+            novo_cliente(clientes)
+
+        elif opcao == "lc":
+            listar_clientes(clientes)
+
+        elif opcao == "ncc":
             numero_conta = len(contas) + 1
             criar_conta(numero_conta, clientes, contas)
 
-        elif opcao == "lc":
+        elif opcao == "lcc":
             listar_contas(contas)
 
         elif opcao == "t":
